@@ -4,16 +4,24 @@
 
 #include <stdint.h>
 
+#define SYSCLOCK_HZ  250000000
+#define APBCLOCK_HZ  125000000
+
 #define __bit(X)             (0x01 << X)
 #define bit_is_set(X, Y)     (X & (0x01 << Y))
 #define bit_not_set(X, Y)    ((X & (0x01 << Y)) == 0)
+#define set_bit(X, Y)        X |= __bit(Y)
+#define clr_bit(X, Y)        X &= (~__bit(Y))
 
 #define PERIPH_BASE  0x3f000000
+//#define PERIPH_BASE  0x20000000 no RPi0 e RPi1
 #define GPIO_ADDR    (PERIPH_BASE + 0x200000)
 #define AUX_ADDR     (PERIPH_BASE + 0x215000)
 #define AUX_MU_ADDR  (PERIPH_BASE + 0x215040)
 #define TIMER_ADDR   (PERIPH_BASE + 0x00B400)
 #define IRQ_ADDR     (PERIPH_BASE + 0x00B200)
+
+#define CORE_ADDR    0x40000000
 
 typedef struct {
    uint32_t gpfsel[6];   // Function select (3 bits/gpio)
@@ -91,6 +99,37 @@ typedef struct {
 } irq_reg_t;
 #define IRQ_REG(X)     ((irq_reg_t*)(IRQ_ADDR))->X
 
+typedef struct {
+   uint32_t control;
+   unsigned : 32; 
+   uint32_t timer_pre;
+   uint32_t irq_routing;
+   uint32_t pmu_irq_enable;
+   uint32_t pmu_irq_disable;
+   unsigned : 32;
+   uint32_t timer_count_lo;
+   uint32_t timer_count_hi;
+   uint32_t local_routing;
+   unsigned : 32;
+   uint32_t axi_counters;
+   uint32_t axi_irq;
+   uint32_t timer_control;
+   uint32_t timer_flags;
+   unsigned : 32;
+   uint32_t timer_irq[4];
+   uint32_t mailbox_irq[4];
+   uint32_t irq_source[4];
+   uint32_t fiq_source[4];
+   uint32_t core0_mailbox_write[4];
+   uint32_t core1_mailbox_write[4];
+   uint32_t core2_mailbox_write[4];
+   uint32_t core3_mailbox_write[4];
+   uint32_t core0_mailbox_read[4];
+   uint32_t core1_mailbox_read[4];
+   uint32_t core2_mailbox_read[4];
+   uint32_t core3_mailbox_read[4];
+} core_reg_t;
+#define CORE_REG(X)     ((core_reg_t*)(CORE_ADDR))->X
 
 void delay(uint32_t dur);
 uint32_t get_cpsr(void);
