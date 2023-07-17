@@ -131,6 +131,46 @@ typedef struct {
 } core_reg_t;
 #define CORE_REG(X)     ((core_reg_t*)(CORE_ADDR))->X
 
+typedef struct {
+   uint32_t cs;
+   uint32_t cbaddr;
+   uint32_t info;
+   uint32_t src;
+   uint32_t dst;
+   uint32_t length;
+   uint32_t stride;
+   uint32_t next;
+   uint32_t debug;
+} dma_reg_t;
+
+typedef struct {
+   uint32_t info;
+   uint32_t src;
+   uint32_t dst;
+   uint32_t length;
+   uint32_t stride;
+   uint32_t next;
+   uint32_t pad[2];
+} dma_cb_t;
+
+#define DMA_REG_ADDR_0  (PERIPH_BASE + 0x7000)
+#define DMA_REG_ADDR_1  (PERIPH_BASE + 0x7100)
+#define DMA_REG_ADDR_2  (PERIPH_BASE + 0x7200)
+#define DMA_REG_ADDR_3  (PERIPH_BASE + 0x7300)
+#define DMA_REG_ADDR_4  (PERIPH_BASE + 0x7400)
+#define DMA_REG_ADDR_5  (PERIPH_BASE + 0x7500)
+#define DMA_REG_ADDR_6  (PERIPH_BASE + 0x7600)
+#define DMA_REG_ADDR_7  (PERIPH_BASE + 0x7700)
+#define DMA_REG_ADDR_8  (PERIPH_BASE + 0x7800)
+#define DMA_REG_ADDR_9  (PERIPH_BASE + 0x7900)
+#define DMA_REG_ADDR_10  (PERIPH_BASE + 0x7a00)
+#define DMA_REG_ADDR_11  (PERIPH_BASE + 0x7b00)
+#define DMA_REG_ADDR_12  (PERIPH_BASE + 0x7c00)
+#define DMA_REG_ADDR_13  (PERIPH_BASE + 0x7d00)
+#define DMA_REG_ADDR_14  (PERIPH_BASE + 0x7e00)
+
+#define DMA_REG(N, X)  ((dma_reg_t*)(DMA_REG_ADDR_##N))->X
+
 void delay(uint32_t dur);
 uint32_t get_cpsr(void);
 void enable_irq(uint32_t en);
