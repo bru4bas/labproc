@@ -144,6 +144,12 @@ typedef struct {
 } dma_reg_t;
 
 typedef struct {
+   uint32_t irq;
+   uint32_t pad[3];
+   uint32_t enable;
+} dma_com_t;
+
+typedef struct {
    uint32_t info;
    uint32_t src;
    uint32_t dst;
@@ -168,8 +174,10 @@ typedef struct {
 #define DMA_REG_ADDR_12  (PERIPH_BASE + 0x7c00)
 #define DMA_REG_ADDR_13  (PERIPH_BASE + 0x7d00)
 #define DMA_REG_ADDR_14  (PERIPH_BASE + 0x7e00)
+#define DMA_COM_ADDR     (PERIPH_BASE + 0x7fe0)
 
-#define DMA_REG(N, X)  ((dma_reg_t*)(DMA_REG_ADDR_##N))->X
+#define DMA_REG(N, X)      ((dma_reg_t*)(DMA_REG_ADDR_##N))->X
+#define DMA_COM_REG(X)     ((dma_com_t*)(DMA_COM_ADDR))->X
 
 void delay(uint32_t dur);
 uint32_t get_cpsr(void);
