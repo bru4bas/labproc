@@ -42,7 +42,7 @@ ${IMAGE}: ${EXEC}
 # Gerar arquivo HEX para bootloader 
 #
 ${HEXFILE}: ${EXEC}
-	${OBJCPY} ${EXEC} -O ihex ${IMAGE}
+	${OBJCPY} ${EXEC} -O ihex ${HEXFILE}
 
 #
 # Gerar listagem
