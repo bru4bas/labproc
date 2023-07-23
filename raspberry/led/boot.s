@@ -1,5 +1,6 @@
 
 .section .init
+.global start
 start:
   /*
    * Verifica priviégio de execução EL2 (HYP) ou EL1 (SVC)

@@ -1,6 +1,6 @@
 
 .section .init
-.globl start
+.global start
 start:
    /*
     * Ponto de entrada e vetor de interrupções

@@ -1,5 +1,6 @@
 
 .section .init
+.global start
 start:
 
   /*
