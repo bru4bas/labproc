@@ -1,5 +1,5 @@
 
-FONTES = main.c boot.s
+FONTES = main.c boot.s hex.c uart.c
 
 # Dispositivo serial conectado ao rasperry (bootloader)
 BOOTLOADR = /dev/ttyUSB0
@@ -9,7 +9,7 @@ BOOTLOADR = /dev/ttyUSB0
 #
 EXEC = kernel.elf
 MAP = kernel.map
-IMAGE = kernel.img
+IMAGE = loader.img
 LIST = kernel.list
 HEXFILE = kernel.hex
 

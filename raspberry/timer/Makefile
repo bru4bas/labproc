@@ -1,6 +1,9 @@
 
 FONTES = main.c boot.s
 
+# Dispositivo serial conectado ao rasperry (bootloader)
+BOOTLOADR = /dev/ttyUSB0
+
 #
 # Arquivos de saída 
 #
@@ -8,6 +11,7 @@ EXEC = kernel.elf
 MAP = kernel.map
 IMAGE = kernel.img
 LIST = kernel.list
+HEXFILE = kernel.hex
 
 PREFIXO = arm-none-eabi-
 LDSCRIPT = kernel.ld
@@ -35,6 +39,12 @@ ${IMAGE}: ${EXEC}
 	${OBJCPY} ${EXEC} -O binary ${IMAGE}
 
 #
+# Gerar arquivo HEX para bootloader 
+#
+${HEXFILE}: ${EXEC}
+	${OBJCPY} ${EXEC} -O ihex ${IMAGE}
+
+#
 # Gerar listagem
 #
 ${LIST}: ${EXEC}
@@ -56,7 +66,7 @@ ${LIST}: ${EXEC}
 # Limpar tudo
 #
 clean:
-	rm -f *.o ${EXEC} ${MAP} ${LIST} ${IMAGE}
+	rm -f *.o ${EXEC} ${MAP} ${LIST} ${IMAGE} ${HEXFILE}
 
 #
 # Iniciar openocd
@@ -75,6 +85,15 @@ gdb: ${EXEC}
 		           -ex "target extended-remote :3333" \
 					  -ex "load" \
 					  ${EXEC}
+
+#
+# Enviar arquivo ao bootloader
+#
+load: ${HEXFILE}
+	@if [ ! -e ${BOOTLOADR} ]; then \
+		echo "Dispositivo USB não encontrado em ${HEXFILE}" ;\
+	else stty -F ${BOOTLOADR} 115200 && cp ${HEXFILE} ${BOOTLOADR} ;\
+	fi
 
 stop:
 	-pkill openocd

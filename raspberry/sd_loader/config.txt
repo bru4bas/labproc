@@ -1,0 +1,8 @@
+
+kernel=loader.img
+kernel_address=0x2000
+arm_64bit=0
+disable_commandline_tags=1
+enable_jtag_gpio=1
+
+
