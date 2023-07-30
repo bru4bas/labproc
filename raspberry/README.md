@@ -5,6 +5,7 @@ Exemplos de código em C e assembler para configuração de periféricos do Rasp
 * led/ -- piscar o led básico
 * uart/ -- piscar o led falando pela mini UART
 * timer/ -- piscar o led usando interrupção do core timer
+* mem/ -- ligando o gerenciador de memória MMU
 
 * loader/ -- Kernel Panic(TM) bootloader para carregar programas sem J-tag
 
